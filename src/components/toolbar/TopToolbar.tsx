@@ -16,7 +16,6 @@ import { useUIStore } from '@/store/uiStore';
 import { useFlowStore } from '@/store/flowStore';
 import ThemeToggle from './ThemeToggle';
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const VERSIONS = [
   { number: 1, name: 'v1', status: 'production' as const },
@@ -76,14 +75,9 @@ export default function TopToolbar() {
             <ChevronDown className="h-3 w-3" />
           </button>
 
-          <AnimatePresence>
-            {showVersionDropdown && (
-              <motion.div
-                initial={{ opacity: 0, y: -4, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -4, scale: 0.98 }}
-                transition={{ duration: 0.15 }}
-                className="absolute top-full left-0 mt-1 w-44 bg-popover border border-border rounded-lg shadow-lg z-50 py-1"
+          {showVersionDropdown && (
+              <div
+                className="absolute top-full left-0 mt-1 w-44 bg-popover border border-border rounded-lg shadow-lg z-50 py-1 animate-fadeIn"
               >
                 {VERSIONS.map((v) => (
                   <button
@@ -102,9 +96,8 @@ export default function TopToolbar() {
                     )}
                   </button>
                 ))}
-              </motion.div>
+              </div>
             )}
-          </AnimatePresence>
         </div>
       </div>
 

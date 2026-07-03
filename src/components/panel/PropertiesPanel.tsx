@@ -5,7 +5,6 @@ import { useFlowStore } from '@/store/flowStore';
 import { NODE_DEFINITIONS } from '@/constants/nodeTypes';
 import type { CustomNodeType } from '@/types/nodes';
 import { X, Trash2 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 import AgentPanel from './panels/AgentPanel';
 import ConditionPanel from './panels/ConditionPanel';
@@ -50,14 +49,9 @@ export default function PropertiesPanel() {
   };
 
   return (
-    <AnimatePresence>
-      <motion.div
+      <div
         key={selectedNodeId}
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 20 }}
-        transition={{ duration: 0.2, ease: 'easeOut' }}
-        className="flex flex-col h-full w-[300px] border-l border-border bg-card"
+        className="flex flex-col h-full w-[300px] border-l border-border bg-card animate-fadeIn"
       >
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-border">
@@ -160,7 +154,6 @@ export default function PropertiesPanel() {
             </div>
           )}
         </div>
-      </motion.div>
-    </AnimatePresence>
+      </div>
   );
 }

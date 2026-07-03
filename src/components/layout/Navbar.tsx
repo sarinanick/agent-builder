@@ -4,8 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Bot, Store, Menu, X } from 'lucide-react';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -64,44 +62,36 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden overflow-hidden border-t border-border"
-          >
-            <div className="px-4 py-3 space-y-1">
-              <Link
-                href="/"
-                onClick={() => setMobileOpen(false)}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  isBuilder
-                    ? 'bg-foreground text-background'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-accent'
-                }`}
-              >
-                <Bot className="h-3.5 w-3.5" />
-                Agent Builder
-              </Link>
-              <Link
-                href="/marketplace"
-                onClick={() => setMobileOpen(false)}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  isMarketplace
-                    ? 'bg-foreground text-background'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-accent'
-                }`}
-              >
-                <Store className="h-3.5 w-3.5" />
-                Marketplace
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {mobileOpen && (
+        <div className="md:hidden overflow-hidden border-t border-border animate-slideDown">
+          <div className="px-4 py-3 space-y-1">
+            <Link
+              href="/"
+              onClick={() => setMobileOpen(false)}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                isBuilder
+                  ? 'bg-foreground text-background'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+              }`}
+            >
+              <Bot className="h-3.5 w-3.5" />
+              Agent Builder
+            </Link>
+            <Link
+              href="/marketplace"
+              onClick={() => setMobileOpen(false)}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                isMarketplace
+                  ? 'bg-foreground text-background'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+              }`}
+            >
+              <Store className="h-3.5 w-3.5" />
+              Marketplace
+            </Link>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

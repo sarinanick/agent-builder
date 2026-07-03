@@ -1,51 +1,14 @@
 // ─── Types ───────────────────────────────────────────────────────
-export interface TeamMember {
-  name: string;
-  role: string;
-  img: number;
-}
-
-export interface Tech {
-  name: string;
-  icon: string;
-  className: string;
-}
-
+export interface TeamMember { name: string; role: string; img: number; }
+export interface Tech { name: string; icon: string; className: string; }
 export interface Artwork {
-  id: number;
-  seed: string;
-  height: number;
-  title: string;
-  prompt: string;
-  techs: Tech[];
-  category: string;
-  duration: string;
-  teamName: string;
-  team: TeamMember[];
-  fav: boolean;
-  liked: boolean;
-  rating: number;
-  price: number;
-  views: number;
-  isNew: boolean;
-  trending: boolean;
-  createdAt: number;
+  id: number; seed: string; height: number; title: string; prompt: string;
+  techs: Tech[]; category: string; duration: string; teamName: string;
+  team: TeamMember[]; fav: boolean; liked: boolean; rating: number;
+  price: number; views: number; isNew: boolean; trending: boolean; createdAt: number;
 }
-
-export interface Track {
-  id: number;
-  title: string;
-  genre: string;
-  duration: string;
-  likes: string;
-  playing: boolean;
-}
-
-export interface Toast {
-  id: number;
-  icon: string;
-  msg: string;
-}
+export interface Track { id: number; title: string; genre: string; duration: string; likes: string; playing: boolean; }
+export interface Toast { id: number; icon: string; msg: string; }
 
 // ─── Tool Icons ──────────────────────────────────────────────────
 export const TOOL_ICONS: Record<string, { icon: string; className: string; cat: string }> = {
@@ -56,12 +19,9 @@ export const TOOL_ICONS: Record<string, { icon: string; className: string; cat: 
 };
 
 export const ALL_TOOLS = ['Midjourney', 'Sora', 'Runway', 'Stable Diffusion'];
-
 export const CATEGORIES = [
-  { key: 'all', label: 'All' },
-  { key: 'image', label: 'Image' },
-  { key: 'video', label: 'Video' },
-  { key: 'model3d', label: '3D' },
+  { key: 'all', label: 'All' }, { key: 'image', label: 'Image' },
+  { key: 'video', label: 'Video' }, { key: 'model3d', label: '3D' },
 ];
 
 const TEAM_MEMBERS: TeamMember[] = [
@@ -70,16 +30,11 @@ const TEAM_MEMBERS: TeamMember[] = [
   { name: 'Reza Ghasemi', role: 'Retoucher', img: 15 },
   { name: 'Nia Karimi', role: 'AI Artist', img: 32 },
 ];
-
 const TEAM_NAMES = ['Nebula Collective', 'Cyber Creators', 'AI Dreamers', 'Pixel Pioneers'];
+const TECH_OPTIONS = [['Midjourney', 'Runway'], ['Sora', 'Stable Diffusion'], ['Midjourney'], ['Stable Diffusion'], ['Sora']];
 
-const TECH_OPTIONS = [
-  ['Midjourney', 'Runway'],
-  ['Sora', 'Stable Diffusion'],
-  ['Midjourney'],
-  ['Stable Diffusion'],
-  ['Sora'],
-];
+// Use picsum with specific IDs that are known to work
+const PICSUM_IDS = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100];
 
 export function generateItems(count: number): Artwork[] {
   const items: Artwork[] = [];
@@ -87,14 +42,13 @@ export function generateItems(count: number): Artwork[] {
     const teamSize = Math.floor(Math.random() * 4) + 1;
     const team: TeamMember[] = [];
     for (let j = 0; j < teamSize; j++) team.push(TEAM_MEMBERS[Math.floor(Math.random() * TEAM_MEMBERS.length)]);
-
     const seconds = Math.floor(Math.random() * 60);
     const duration = `00:${seconds.toString().padStart(2, '0')}`;
     const toolNames = TECH_OPTIONS[Math.floor(Math.random() * TECH_OPTIONS.length)];
     const techs: Tech[] = toolNames.map((n) => ({ name: n, icon: TOOL_ICONS[n].icon, className: TOOL_ICONS[n].className }));
-
+    const imgId = PICSUM_IDS[i % PICSUM_IDS.length];
     items.push({
-      id: i, seed: `prod-${i}`, height: Math.floor(Math.random() * 400) + 300,
+      id: i, seed: `${imgId}`, height: Math.floor(Math.random() * 300) + 280,
       title: `AI Concept #${i}`, prompt: `surreal landscape, sci-fi city, highly detailed, ${i} --ar 16:9`,
       techs, category: TOOL_ICONS[toolNames[0]].cat, duration,
       teamName: TEAM_NAMES[Math.floor(Math.random() * TEAM_NAMES.length)], team,
@@ -108,15 +62,10 @@ export function generateItems(count: number): Artwork[] {
 
 // ─── Sonora ──────────────────────────────────────────────────────
 export const SONORA_PLACEHOLDERS = [
-  'A pop song about a summer evening in the north...',
-  'A calm lo-fi piece for late night study...',
-  'An epic cinematic theme with choir and full orchestra...',
-  'A high-energy electronic track for driving...',
-  'A traditional ballad with tar and setar...',
+  'A pop song about a summer evening...', 'A calm lo-fi piece for late night study...',
+  'An epic cinematic theme with choir...', 'A high-energy electronic track...', 'A traditional ballad with tar and setar...',
 ];
-
 export const SONORA_GENRES = ['Pop', 'Lo-fi', 'Cinematic', 'Electronic', 'Traditional', 'Rock'];
-
 export const SONORA_TRACKS: Track[] = [
   { id: 1, title: 'Golden Hour Drift', genre: 'Lo-fi', duration: '2:48', likes: '1.2k', playing: false },
   { id: 2, title: 'Blue Nights', genre: 'Persian Pop', duration: '3:15', likes: '980', playing: false },
@@ -125,7 +74,6 @@ export const SONORA_TRACKS: Track[] = [
   { id: 5, title: 'Velvet Static', genre: 'Rock', duration: '3:33', likes: '1.5k', playing: false },
   { id: 6, title: 'Epic Horizon', genre: 'Cinematic', duration: '5:02', likes: '3.1k', playing: false },
 ];
-
 export const SONORA_FEATURES = [
   { title: 'Endless Genre Variety', desc: 'From pop to cinematic, create any mood with a single prompt.', icon: '📊' },
   { title: 'Natural Singer Voice', desc: 'Vocals and melody in harmony with the emotion of your text.', icon: '🎤' },
