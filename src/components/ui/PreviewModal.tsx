@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Modal from './Modal';
 import { Send, Bot, User, Loader2 } from 'lucide-react';
+import { useI18n } from '@/lib/i18n';
 
 interface PreviewModalProps {
   isOpen: boolean;
@@ -15,8 +16,9 @@ interface Message {
 }
 
 export default function PreviewModal({ isOpen, onClose }: PreviewModalProps) {
+  const { lang } = useI18n();
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: 'Hello! I\'m your agent. Ask me anything.' },
+    { role: 'assistant', content: lang === 'fa' ? 'سلام! من ایجنت شما هستم. هر سوالی دارید بپرسید.' : 'Hello! I\'m your agent. Ask me anything.' },
   ]);
   const [input, setInput] = useState('');
   const [isRunning, setIsRunning] = useState(false);
@@ -33,7 +35,7 @@ export default function PreviewModal({ isOpen, onClose }: PreviewModalProps) {
         ...prev,
         {
           role: 'assistant',
-          content: `[Preview] Simulated response. In production, "${userMessage}" would flow through: Query rewrite → Classify → Route to agent.`,
+          content: `[Preview] ${lang === 'fa' ? 'پاسخ شبیه‌سازی شده. در حالت واقعی، "' + userMessage + '" از طریق: بازنویسی کوئری → طبقه‌بندی → مسیریابی به ایجنت پردازش می‌شد.` : 'Simulated response. In production, "' + userMessage + '" would flow through: Query rewrite → Classify → Route to agent.'}`,
         },
       ]);
       setIsRunning(false);
@@ -41,22 +43,24 @@ export default function PreviewModal({ isOpen, onClose }: PreviewModalProps) {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Preview Workflow" maxWidth="max-w-lg">
+    <Modal isOpen={isOpen} onClose={onClose} title={lang === 'fa' ? 'پیش‌نمایش workflow' : 'Preview Workflow'} maxWidth="max-w-lg">
       <div className="space-y-3 mb-4 max-h-80 overflow-y-auto">
         {messages.map((msg, i) => (
           <div key={i} className={`flex gap-2.5 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             {msg.role === 'assistant' && (
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-muted text-muted-foreground shrink-0">
+              <div className="flex h-7 w-7 items-center justify-center rounded-xl shrink-0" style={{ background: 'var(--secondary)', color: 'var(--muted-foreground)' }}>
                 <Bot className="h-3.5 w-3.5" />
               </div>
             )}
-            <div className={`max-w-[80%] px-3 py-2 rounded-xl text-sm ${
+            <div className={`max-w-[80%] px-3 py-2 rounded-2xl text-sm ${
               msg.role === 'user'
-                ? 'bg-foreground text-background rounded-br-sm'
-                : 'bg-muted text-foreground rounded-bl-sm'
-            }`}>{msg.content}</div>
+                ? 'bg-foreground text-background rounded-br-md'
+                : 'rounded-bl-md'
+            }`} style={msg.role === 'assistant' ? { background: 'var(--secondary)', color: 'var(--foreground)' } : {}}>
+              {msg.content}
+            </div>
             {msg.role === 'user' && (
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-muted text-muted-foreground shrink-0">
+              <div className="flex h-7 w-7 items-center justify-center rounded-xl shrink-0" style={{ background: 'var(--secondary)', color: 'var(--muted-foreground)' }}>
                 <User className="h-3.5 w-3.5" />
               </div>
             )}
@@ -64,11 +68,11 @@ export default function PreviewModal({ isOpen, onClose }: PreviewModalProps) {
         ))}
         {isRunning && (
           <div className="flex gap-2.5">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+            <div className="flex h-7 w-7 items-center justify-center rounded-xl" style={{ background: 'var(--secondary)', color: 'var(--muted-foreground)' }}>
               <Bot className="h-3.5 w-3.5" />
             </div>
-            <div className="px-3 py-2 rounded-xl bg-muted rounded-bl-sm">
-              <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground" />
+            <div className="px-3 py-2 rounded-2xl rounded-bl-sm" style={{ background: 'var(--secondary)' }}>
+              <Loader2 className="h-3.5 w-3.5 animate-spin" style={{ color: 'var(--muted-foreground)' }} />
             </div>
           </div>
         )}
@@ -77,14 +81,16 @@ export default function PreviewModal({ isOpen, onClose }: PreviewModalProps) {
       <div className="flex gap-2">
         <input type="text" value={input} onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-          placeholder="Type a message..."
-          className="flex-1 h-9 px-3 rounded-lg border border-input bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring" />
+          placeholder={lang === 'fa' ? 'پیامی بنویسید...' : 'Type a message...'}
+          className="panel-input flex-1 !h-10" />
         <button onClick={handleSend} disabled={!input.trim() || isRunning}
-          className="flex h-9 w-9 items-center justify-center rounded-lg bg-foreground text-background hover:opacity-90 disabled:opacity-40 transition-opacity">
+          className="btn-ios btn-ios-primary !h-10 !w-10 !px-0 !rounded-xl">
           <Send className="h-3.5 w-3.5" />
         </button>
       </div>
-      <p className="text-[11px] text-muted-foreground text-center mt-2">Preview mode — responses are simulated.</p>
+      <p className="text-[11px] text-center mt-2" style={{ color: 'var(--muted-foreground)' }}>
+        {lang === 'fa' ? 'حالت پیش‌نمایش — پاسخ‌ها شبیه‌سازی شده‌اند.' : 'Preview mode — responses are simulated.'}
+      </p>
     </Modal>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import type { McpNodeData } from '@/types/nodes';
+import { useI18n } from '@/lib/i18n';
 
 interface McpPanelProps {
   data: McpNodeData;
@@ -8,25 +9,24 @@ interface McpPanelProps {
 }
 
 export default function McpPanel({ data, onChange }: McpPanelProps) {
+  const { lang } = useI18n();
+
   return (
     <div className="space-y-4">
-      <div className="space-y-1.5">
-        <label className="text-xs font-medium text-muted-foreground">Server URL</label>
+      <div>
+        <label className="panel-label">{lang === 'fa' ? 'آدرس سرور' : 'Server URL'}</label>
         <input type="text" value={data.serverUrl || ''} onChange={(e) => onChange({ serverUrl: e.target.value })}
-          placeholder="https://mcp-server.example.com"
-          className="w-full h-8 px-3 text-sm rounded-md border border-input bg-background text-foreground font-mono placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring" />
+          placeholder="https://mcp-server.example.com" className="panel-input font-mono" />
       </div>
-      <div className="space-y-1.5">
-        <label className="text-xs font-medium text-muted-foreground">Tool Name</label>
+      <div>
+        <label className="panel-label">{lang === 'fa' ? 'نام ابزار' : 'Tool Name'}</label>
         <input type="text" value={data.toolName || ''} onChange={(e) => onChange({ toolName: e.target.value })}
-          placeholder="search_documents"
-          className="w-full h-8 px-3 text-sm rounded-md border border-input bg-background text-foreground font-mono placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring" />
+          placeholder="search_documents" className="panel-input font-mono" />
       </div>
-      <div className="space-y-1.5">
-        <label className="text-xs font-medium text-muted-foreground">Parameters (JSON)</label>
+      <div>
+        <label className="panel-label">{lang === 'fa' ? 'پارامترها (JSON)' : 'Parameters (JSON)'}</label>
         <textarea value={data.parameters || ''} onChange={(e) => onChange({ parameters: e.target.value })}
-          placeholder='{ "query": "{{input}}" }' rows={4}
-          className="w-full px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground font-mono placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring resize-none" />
+          placeholder='{ "query": "{{input}}" }' rows={4} className="panel-textarea font-mono" />
       </div>
     </div>
   );

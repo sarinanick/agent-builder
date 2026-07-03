@@ -157,18 +157,18 @@ export default function EditorCanvas() {
 
   const minimapNodeColor = (node: Node) => {
     const colors: Record<string, string> = {
-      start: '#22c55e',
-      end: '#22c55e',
-      agent: '#a855f7',
-      fileSearch: '#eab308',
-      guardrails: '#eab308',
-      mcp: '#eab308',
-      condition: '#f97316',
-      whileLoop: '#f97316',
-      humanApproval: '#f97316',
-      transform: '#a855f7',
-      setState: '#a855f7',
-      note: '#78716c',
+      start: '#30d158',
+      end: '#30d158',
+      agent: '#bf5af2',
+      fileSearch: '#ff9f0a',
+      guardrails: '#ff9f0a',
+      mcp: '#ff9f0a',
+      condition: '#ff9f0a',
+      whileLoop: '#ff9f0a',
+      humanApproval: '#ff9f0a',
+      transform: '#0a84ff',
+      setState: '#0a84ff',
+      note: '#8e8e93',
     };
     return colors[node.type as string] || '#666';
   };

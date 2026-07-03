@@ -1,6 +1,7 @@
 'use client';
 
 import type { HumanApprovalNodeData } from '@/types/nodes';
+import { useI18n } from '@/lib/i18n';
 
 interface HumanApprovalPanelProps {
   data: HumanApprovalNodeData;
@@ -8,19 +9,20 @@ interface HumanApprovalPanelProps {
 }
 
 export default function HumanApprovalPanel({ data, onChange }: HumanApprovalPanelProps) {
+  const { lang } = useI18n();
+
   return (
     <div className="space-y-4">
-      <div className="space-y-1.5">
-        <label className="text-xs font-medium text-muted-foreground">Instructions</label>
+      <div>
+        <label className="panel-label">{lang === 'fa' ? 'دستورات' : 'Instructions'}</label>
         <textarea value={data.instructions || ''} onChange={(e) => onChange({ instructions: e.target.value })}
-          placeholder="Please review the output before proceeding..." rows={4}
-          className="w-full px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring resize-none" />
+          placeholder={lang === 'fa' ? 'لطفاً خروجی را بررسی کنید...' : 'Please review the output before proceeding...'}
+          rows={4} className="panel-textarea" />
       </div>
-      <div className="space-y-1.5">
-        <label className="text-xs font-medium text-muted-foreground">Timeout (seconds): {data.timeout || 300}</label>
+      <div>
+        <label className="panel-label">{lang === 'fa' ? 'مهلت (ثانیه)' : 'Timeout (seconds)'}: {data.timeout || 300}</label>
         <input type="range" min="30" max="3600" step="30" value={data.timeout || 300}
-          onChange={(e) => onChange({ timeout: parseInt(e.target.value) })}
-          className="w-full accent-foreground" />
+          onChange={(e) => onChange({ timeout: parseInt(e.target.value) })} className="panel-range" />
       </div>
     </div>
   );

@@ -9,34 +9,18 @@ export default function CanvasControls() {
   const zoomPercent = Math.round(viewport.zoom * 100);
 
   return (
-    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-0.5 px-1.5 py-1 rounded-lg bg-card border border-border shadow-lg">
-      <button
-        onClick={() => zoomIn()}
-        className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-        title="Zoom in"
-      >
-        <ZoomIn className="h-3.5 w-3.5" />
-      </button>
-
-      <span className="text-[11px] text-muted-foreground font-mono min-w-[36px] text-center select-none">
-        {zoomPercent}%
-      </span>
-
-      <button
-        onClick={() => zoomOut()}
-        className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-        title="Zoom out"
-      >
+    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-0.5 px-2 py-1.5 rounded-2xl shadow-lg" style={{ background: 'var(--card)', border: '1px solid var(--border)', backdropFilter: 'blur(20px)' }}>
+      <button onClick={() => zoomOut()} className="btn-ios btn-ios-ghost btn-ios-icon !w-7 !h-7" title="Zoom out">
         <ZoomOut className="h-3.5 w-3.5" />
       </button>
-
-      <div className="w-px h-4 bg-border mx-0.5" />
-
-      <button
-        onClick={() => fitView({ padding: 0.3 })}
-        className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-        title="Fit view"
-      >
+      <span className="text-[11px] font-mono min-w-[36px] text-center select-none" style={{ color: 'var(--muted-foreground)' }}>
+        {zoomPercent}%
+      </span>
+      <button onClick={() => zoomIn()} className="btn-ios btn-ios-ghost btn-ios-icon !w-7 !h-7" title="Zoom in">
+        <ZoomIn className="h-3.5 w-3.5" />
+      </button>
+      <div className="w-px h-4 mx-1" style={{ background: 'var(--border)' }} />
+      <button onClick={() => fitView({ padding: 0.3 })} className="btn-ios btn-ios-ghost btn-ios-icon !w-7 !h-7" title="Fit view">
         <Maximize2 className="h-3.5 w-3.5" />
       </button>
     </div>
