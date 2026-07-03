@@ -8,7 +8,7 @@ import {
   BackgroundVariant,
   type Node,
 } from '@xyflow/react';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { useFlowStore } from '@/store/flowStore';
 import { useUIStore } from '@/store/uiStore';
 import { NODE_DEFINITIONS } from '@/constants/nodeTypes';
@@ -158,8 +158,21 @@ export default function EditorCanvas() {
   );
 
   const minimapNodeColor = (node: Node) => {
-    const def = NODE_DEFINITIONS[node.type as CustomNodeType];
-    return def?.color || '#666';
+    const colors: Record<string, string> = {
+      start: '#22c55e',
+      end: '#22c55e',
+      agent: '#a855f7',
+      fileSearch: '#eab308',
+      guardrails: '#eab308',
+      mcp: '#eab308',
+      condition: '#f97316',
+      whileLoop: '#f97316',
+      humanApproval: '#f97316',
+      transform: '#a855f7',
+      setState: '#a855f7',
+      note: '#78716c',
+    };
+    return colors[node.type as string] || '#666';
   };
 
   return (
@@ -184,13 +197,11 @@ export default function EditorCanvas() {
           animated: true,
         }}
         proOptions={{ hideAttribution: true }}
-        className="bg-zinc-50 dark:bg-zinc-950"
       >
-        <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#e5e7eb" />
+        <Background variant={BackgroundVariant.Dots} gap={24} size={1} color="var(--border)" />
         <MiniMap
           nodeColor={minimapNodeColor}
           maskColor="rgba(0,0,0,0.05)"
-          className="!bg-zinc-100 dark:!bg-zinc-800 !border-zinc-200 dark:!border-zinc-700"
           pannable
           zoomable
         />

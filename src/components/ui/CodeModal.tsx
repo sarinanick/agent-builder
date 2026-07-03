@@ -20,7 +20,6 @@ export default function CodeModal({ isOpen, onClose }: CodeModalProps) {
 
   const chatkitCode = `import { ChatKit } from '@openai/chatkit-react'
 
-// Use the published workflow ID
 const workflowId = "wf_${Date.now().toString(36)}"
 
 export default function AgentChat() {
@@ -36,7 +35,6 @@ export default function AgentChat() {
 
 const client = new AgentBuilder()
 
-// Run the workflow with input
 const result = await client.runs.create({
   workflow_id: "wf_${Date.now().toString(36)}",
   input: {
@@ -58,48 +56,31 @@ console.log(result.output)`;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Export Code" maxWidth="max-w-3xl">
-      {/* Tabs */}
-      <div className="flex gap-1 mb-4 p-1 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
-        <button
-          onClick={() => setActiveTab('chatkit')}
-          className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-            activeTab === 'chatkit'
-              ? 'bg-white dark:bg-zinc-700 text-zinc-800 dark:text-zinc-200 shadow-sm'
-              : 'text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300'
-          }`}
-        >
-          ChatKit (Recommended)
-        </button>
-        <button
-          onClick={() => setActiveTab('sdk')}
-          className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-            activeTab === 'sdk'
-              ? 'bg-white dark:bg-zinc-700 text-zinc-800 dark:text-zinc-200 shadow-sm'
-              : 'text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300'
-          }`}
-        >
-          Agents SDK
-        </button>
+      <div className="flex gap-1 mb-4 p-1 bg-muted rounded-lg">
+        <button onClick={() => setActiveTab('chatkit')}
+          className={`flex-1 px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${
+            activeTab === 'chatkit' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+          }`}>ChatKit</button>
+        <button onClick={() => setActiveTab('sdk')}
+          className={`flex-1 px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${
+            activeTab === 'sdk' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+          }`}>Agents SDK</button>
       </div>
 
-      {/* Code block */}
       <div className="relative">
-        <pre className="p-4 rounded-xl bg-zinc-900 text-zinc-100 text-sm font-mono overflow-x-auto whitespace-pre-wrap">
+        <pre className="p-4 rounded-lg bg-background border border-border text-sm font-mono overflow-x-auto whitespace-pre-wrap text-foreground">
           {activeCode}
         </pre>
-        <button
-          onClick={handleCopy}
-          className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-700 hover:bg-zinc-600 text-zinc-300 text-xs transition-colors"
-        >
-          {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+        <button onClick={handleCopy}
+          className="absolute top-2.5 right-2.5 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-muted hover:bg-accent text-muted-foreground text-xs transition-colors">
+          {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
           {copied ? 'Copied' : 'Copy'}
         </button>
       </div>
 
-      {/* Workflow JSON */}
       <div className="mt-4">
-        <h3 className="text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-2">Workflow Definition (JSON)</h3>
-        <pre className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-xs font-mono overflow-x-auto max-h-48 text-zinc-600 dark:text-zinc-400">
+        <h3 className="text-xs font-medium text-muted-foreground mb-2">Workflow JSON</h3>
+        <pre className="p-4 rounded-lg bg-background border border-border text-xs font-mono overflow-x-auto max-h-40 text-muted-foreground">
           {workflowJson}
         </pre>
       </div>

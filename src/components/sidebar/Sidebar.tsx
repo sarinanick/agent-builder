@@ -4,6 +4,7 @@ import { Search } from 'lucide-react';
 import { useUIStore } from '@/store/uiStore';
 import { NODE_CATEGORIES, NODE_DEFINITIONS } from '@/constants/nodeTypes';
 import type { NodeTypeDefinition } from '@/constants/nodeTypes';
+import { motion } from 'framer-motion';
 
 export default function Sidebar() {
   const searchQuery = useUIStore((s) => s.searchQuery);
@@ -24,39 +25,40 @@ export default function Sidebar() {
   })).filter((cat) => cat.nodes.length > 0);
 
   return (
-    <div className="flex flex-col h-full w-[220px] border-r border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80">
+    <div className="flex flex-col h-full w-[220px] border-r border-border bg-card">
       {/* Search */}
-      <div className="p-3 border-b border-zinc-200 dark:border-zinc-800">
+      <div className="p-3">
         <div className="relative">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
           <input
             type="text"
             placeholder="Insert node..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-8 pr-3 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-700
-              bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200
-              placeholder:text-zinc-400 dark:placeholder:text-zinc-500
-              focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500/50
-              transition-all"
+            className="w-full pl-8 pr-3 py-1.5 text-sm rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-all"
           />
         </div>
       </div>
 
       {/* Node categories */}
-      <div className="flex-1 overflow-y-auto p-2 space-y-1">
-        {filteredCategories.map((cat) => (
-          <div key={cat.id}>
-            <div className="px-2 py-1.5 text-xs font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
+      <div className="flex-1 overflow-y-auto px-2 pb-3 space-y-3">
+        {filteredCategories.map((cat, catIndex) => (
+          <motion.div
+            key={cat.id}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: catIndex * 0.05, duration: 0.3 }}
+          >
+            <div className="px-1.5 mb-1.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
               {cat.label}
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-0.5">
               {cat.nodes.map((nodeType) => {
                 const def = NODE_DEFINITIONS[nodeType];
                 return <SidebarNodeItem key={def.type} nodeDef={def} />;
               })}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
@@ -76,9 +78,9 @@ function SidebarNodeItem({ nodeDef }: { nodeDef: NodeTypeDefinition }) {
       draggable
       onDragStart={onDragStart}
       className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg
-        bg-white dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/50
-        hover:bg-zinc-100 dark:hover:bg-zinc-700/50 hover:border-zinc-300 dark:hover:border-zinc-600
-        cursor-grab active:cursor-grabbing transition-all select-none"
+        bg-transparent hover:bg-accent/50
+        cursor-grab active:cursor-grabbing transition-all select-none group
+        active:scale-[0.98] hover:scale-[1.01]"
     >
       <div
         className="flex h-7 w-7 items-center justify-center rounded-md text-white shrink-0"
@@ -86,7 +88,7 @@ function SidebarNodeItem({ nodeDef }: { nodeDef: NodeTypeDefinition }) {
       >
         <Icon className="h-3.5 w-3.5" />
       </div>
-      <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300 truncate">
+      <span className="text-[13px] font-medium text-foreground truncate">
         {nodeDef.label}
       </span>
     </div>

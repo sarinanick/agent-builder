@@ -9,28 +9,23 @@ export default function StartNode({ id, data, selected }: NodeProps) {
 
   return (
     <div
-      className={`flex items-center gap-2 rounded-lg border px-4 py-3 min-w-[140px] cursor-pointer transition-all
-        ${selected ? 'border-emerald-400 shadow-lg shadow-emerald-500/20 ring-1 ring-emerald-400/30' : 'border-emerald-500/30'}
-        bg-emerald-500/10 dark:bg-emerald-500/10`}
+      className={`flex items-center gap-2.5 rounded-xl border px-3.5 py-2.5 min-w-[130px] cursor-pointer transition-all
+        ${selected ? 'border-foreground/30 shadow-lg ring-1 ring-foreground/10' : 'border-border hover:border-foreground/20'}
+        bg-card`}
       onClick={() => setSelectedNodeId(id)}
     >
-      <div className="flex h-8 w-8 items-center justify-center rounded-md bg-emerald-500 text-white">
-        <Play className="h-4 w-4 fill-current" />
+      <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-500">
+        <Play className="h-3 w-3 fill-current" />
       </div>
       <div className="flex flex-col">
-        <span className="text-sm font-medium text-emerald-700 dark:text-emerald-300">
+        <span className="text-[13px] font-medium text-foreground">
           {data.label as string}
         </span>
-        {typeof data.description === 'string' && data.description.length > 0 && (
-          <span className="text-xs text-emerald-600/60 dark:text-emerald-400/60">
-            {data.description}
-          </span>
-        )}
       </div>
       <Handle
         type="source"
         position={Position.Right}
-        className="!w-3 !h-3 !bg-emerald-500 !border-2 !border-emerald-500/30"
+        className="!w-2 !h-2 !bg-muted-foreground !border-2 !border-card"
       />
     </div>
   );

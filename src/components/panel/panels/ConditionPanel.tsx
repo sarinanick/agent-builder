@@ -10,34 +10,34 @@ interface ConditionPanelProps {
 export default function ConditionPanel({ data, onChange }: ConditionPanelProps) {
   return (
     <div className="space-y-4">
-      <div>
-        <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1.5">Expression (CEL)</label>
+      <div className="space-y-1.5">
+        <label className="text-xs font-medium text-muted-foreground">Expression (CEL)</label>
         <textarea
           value={data.expression || ''}
           onChange={(e) => onChange({ expression: e.target.value })}
-          placeholder='input.output_parsed.category == "qa"'
-          rows={4}
-          className="w-full px-3 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/30 resize-none"
+          placeholder='input.category == "qa"'
+          rows={3}
+          className="w-full px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground font-mono focus:outline-none focus:ring-1 focus:ring-ring resize-none"
         />
       </div>
 
-      <div>
-        <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1.5">True Branch Label</label>
+      <div className="space-y-1.5">
+        <label className="text-xs font-medium text-muted-foreground">True Branch</label>
         <input
           type="text"
           value={data.trueLabel || 'True'}
           onChange={(e) => onChange({ trueLabel: e.target.value })}
-          className="w-full px-3 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+          className="w-full h-8 px-3 text-sm rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
         />
       </div>
 
-      <div>
-        <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1.5">False Branch Label</label>
+      <div className="space-y-1.5">
+        <label className="text-xs font-medium text-muted-foreground">False Branch</label>
         <input
           type="text"
           value={data.falseLabel || 'False'}
           onChange={(e) => onChange({ falseLabel: e.target.value })}
-          className="w-full px-3 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+          className="w-full h-8 px-3 text-sm rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
         />
       </div>
     </div>

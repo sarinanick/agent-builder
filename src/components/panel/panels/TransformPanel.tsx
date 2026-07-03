@@ -10,36 +10,34 @@ interface TransformPanelProps {
 export default function TransformPanel({ data, onChange }: TransformPanelProps) {
   return (
     <div className="space-y-4">
-      <div>
-        <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1.5">Input Schema</label>
+      <div className="space-y-1.5">
+        <label className="text-xs font-medium text-muted-foreground">Input Schema</label>
         <textarea
           value={data.inputSchema || ''}
           onChange={(e) => onChange({ inputSchema: e.target.value })}
           placeholder='{ "text": "string" }'
           rows={3}
-          className="w-full px-3 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/30 resize-none"
+          className="w-full px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground font-mono focus:outline-none focus:ring-1 focus:ring-ring resize-none"
         />
       </div>
-
-      <div>
-        <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1.5">Output Schema</label>
+      <div className="space-y-1.5">
+        <label className="text-xs font-medium text-muted-foreground">Output Schema</label>
         <textarea
           value={data.outputSchema || ''}
           onChange={(e) => onChange({ outputSchema: e.target.value })}
           placeholder='{ "result": "string" }'
           rows={3}
-          className="w-full px-3 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/30 resize-none"
+          className="w-full px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground font-mono focus:outline-none focus:ring-1 focus:ring-ring resize-none"
         />
       </div>
-
-      <div>
-        <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1.5">Transform Code</label>
+      <div className="space-y-1.5">
+        <label className="text-xs font-medium text-muted-foreground">Transform Code</label>
         <textarea
           value={data.transformCode || ''}
           onChange={(e) => onChange({ transformCode: e.target.value })}
           placeholder="return { result: input.text.toUpperCase() }"
-          rows={5}
-          className="w-full px-3 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/30 resize-none"
+          rows={4}
+          className="w-full px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground font-mono focus:outline-none focus:ring-1 focus:ring-ring resize-none"
         />
       </div>
     </div>

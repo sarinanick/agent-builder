@@ -33,22 +33,18 @@ function EditorContent() {
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Ctrl+Z / Cmd+Z = Undo
       if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
         e.preventDefault();
         useFlowStore.getState().undo();
       }
-      // Ctrl+Shift+Z / Cmd+Shift+Z = Redo
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'z') {
         e.preventDefault();
         useFlowStore.getState().redo();
       }
-      // Ctrl+Y / Cmd+Y = Redo
       if ((e.ctrlKey || e.metaKey) && e.key === 'y') {
         e.preventDefault();
         useFlowStore.getState().redo();
       }
-      // Delete / Backspace = Delete selected
       if (e.key === 'Delete' || e.key === 'Backspace') {
         const target = e.target as HTMLElement;
         if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT') return;
@@ -61,23 +57,14 @@ function EditorContent() {
   }, []);
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-white dark:bg-zinc-950">
-      {/* Top toolbar */}
+    <div className="h-screen flex flex-col overflow-hidden bg-background">
       <TopToolbar />
-
-      {/* Main content */}
       <div className="flex flex-1 min-h-0">
-        {/* Left sidebar */}
         <Sidebar />
-
-        {/* Canvas */}
         <EditorCanvas />
-
-        {/* Right properties panel */}
         {selectedNodeId && <PropertiesPanel />}
       </div>
 
-      {/* Modals */}
       <CodeModal isOpen={showCodeModal} onClose={() => setShowCodeModal(false)} />
       <PreviewModal isOpen={showPreviewModal} onClose={() => setShowPreviewModal(false)} />
       <DeployModal isOpen={showDeployModal} onClose={() => setShowDeployModal(false)} />

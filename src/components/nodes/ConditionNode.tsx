@@ -11,32 +11,32 @@ export default function ConditionNode({ id, data, selected }: NodeProps) {
 
   return (
     <div
-      className={`flex flex-col rounded-lg border min-w-[180px] cursor-pointer transition-all
-        ${selected ? 'border-orange-400 shadow-lg shadow-orange-500/20 ring-1 ring-orange-400/30' : 'border-orange-500/30'}
-        bg-orange-500/10 dark:bg-orange-500/10`}
+      className={`flex flex-col rounded-xl border min-w-[170px] cursor-pointer transition-all
+        ${selected ? 'border-foreground/30 shadow-lg ring-1 ring-foreground/10' : 'border-border hover:border-foreground/20'}
+        bg-card`}
       onClick={() => setSelectedNodeId(id)}
     >
       <Handle
         type="target"
         position={Position.Left}
-        className="!w-3 !h-3 !bg-orange-500 !border-2 !border-orange-500/30"
+        className="!w-2 !h-2 !bg-muted-foreground !border-2 !border-card"
       />
-      <div className="flex items-center gap-2 px-4 py-2 border-b border-orange-500/20">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-orange-500 text-white">
-          <GitBranch className="h-4 w-4" />
+      <div className="flex items-center gap-2 px-3.5 py-2 border-b border-border">
+        <div className="flex h-6 w-6 items-center justify-center rounded-md bg-orange-500/15 text-orange-500">
+          <GitBranch className="h-3 w-3" />
         </div>
-        <span className="text-sm font-medium text-orange-700 dark:text-orange-300">
+        <span className="text-[13px] font-medium text-foreground">
           {data.label as string}
         </span>
       </div>
-      <div className="px-4 py-2 text-xs text-orange-600/70 dark:text-orange-400/70">
-        {data.expression ? String(data.expression).substring(0, 40) + (String(data.expression).length > 40 ? '...' : '') : 'Enter expression...'}
+      <div className="px-3.5 py-2 text-[11px] text-muted-foreground font-mono">
+        {data.expression ? String(data.expression).substring(0, 35) + (String(data.expression).length > 35 ? '...' : '') : 'condition...'}
       </div>
-      <div className="flex border-t border-orange-500/20">
-        <div className="flex-1 px-4 py-1 text-xs text-center text-orange-600 dark:text-orange-400 border-r border-orange-500/20">
+      <div className="flex border-t border-border">
+        <div className="flex-1 px-3 py-1.5 text-[11px] text-center text-muted-foreground border-r border-border">
           {trueLabel}
         </div>
-        <div className="flex-1 px-4 py-1 text-xs text-center text-orange-600 dark:text-orange-400">
+        <div className="flex-1 px-3 py-1.5 text-[11px] text-center text-muted-foreground">
           {falseLabel}
         </div>
       </div>
@@ -45,14 +45,14 @@ export default function ConditionNode({ id, data, selected }: NodeProps) {
         position={Position.Right}
         id="true"
         style={{ top: '40%' }}
-        className="!w-3 !h-3 !bg-green-500 !border-2 !border-green-500/30"
+        className="!w-2 !h-2 !bg-emerald-500 !border-2 !border-card"
       />
       <Handle
         type="source"
         position={Position.Right}
         id="false"
         style={{ top: '70%' }}
-        className="!w-3 !h-3 !bg-red-500 !border-2 !border-red-500/30"
+        className="!w-2 !h-2 !bg-red-500 !border-2 !border-card"
       />
     </div>
   );

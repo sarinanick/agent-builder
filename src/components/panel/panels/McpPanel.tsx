@@ -10,37 +10,23 @@ interface McpPanelProps {
 export default function McpPanel({ data, onChange }: McpPanelProps) {
   return (
     <div className="space-y-4">
-      <div>
-        <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1.5">Server URL</label>
-        <input
-          type="text"
-          value={data.serverUrl || ''}
-          onChange={(e) => onChange({ serverUrl: e.target.value })}
+      <div className="space-y-1.5">
+        <label className="text-xs font-medium text-muted-foreground">Server URL</label>
+        <input type="text" value={data.serverUrl || ''} onChange={(e) => onChange({ serverUrl: e.target.value })}
           placeholder="https://mcp-server.example.com"
-          className="w-full px-3 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-mono placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
-        />
+          className="w-full h-8 px-3 text-sm rounded-md border border-input bg-background text-foreground font-mono placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring" />
       </div>
-
-      <div>
-        <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1.5">Tool Name</label>
-        <input
-          type="text"
-          value={data.toolName || ''}
-          onChange={(e) => onChange({ toolName: e.target.value })}
+      <div className="space-y-1.5">
+        <label className="text-xs font-medium text-muted-foreground">Tool Name</label>
+        <input type="text" value={data.toolName || ''} onChange={(e) => onChange({ toolName: e.target.value })}
           placeholder="search_documents"
-          className="w-full px-3 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-mono placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
-        />
+          className="w-full h-8 px-3 text-sm rounded-md border border-input bg-background text-foreground font-mono placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring" />
       </div>
-
-      <div>
-        <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1.5">Parameters (JSON)</label>
-        <textarea
-          value={data.parameters || ''}
-          onChange={(e) => onChange({ parameters: e.target.value })}
-          placeholder='{ "query": "{{input}}" }'
-          rows={4}
-          className="w-full px-3 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-mono placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 resize-none"
-        />
+      <div className="space-y-1.5">
+        <label className="text-xs font-medium text-muted-foreground">Parameters (JSON)</label>
+        <textarea value={data.parameters || ''} onChange={(e) => onChange({ parameters: e.target.value })}
+          placeholder='{ "query": "{{input}}" }' rows={4}
+          className="w-full px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground font-mono placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring resize-none" />
       </div>
     </div>
   );

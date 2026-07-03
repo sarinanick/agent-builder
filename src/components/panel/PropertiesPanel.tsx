@@ -5,6 +5,7 @@ import { useFlowStore } from '@/store/flowStore';
 import { NODE_DEFINITIONS } from '@/constants/nodeTypes';
 import type { CustomNodeType } from '@/types/nodes';
 import { X, Trash2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import AgentPanel from './panels/AgentPanel';
 import ConditionPanel from './panels/ConditionPanel';
@@ -39,7 +40,6 @@ export default function PropertiesPanel() {
 
   const handleDelete = () => {
     if (!selectedNodeId) return;
-    // Mark the node as selected so deleteSelected works
     const store = useFlowStore.getState();
     const updatedNodes = store.nodes.map((n) =>
       n.id === selectedNodeId ? { ...n, selected: true } : { ...n, selected: false }
@@ -50,108 +50,117 @@ export default function PropertiesPanel() {
   };
 
   return (
-    <div className="flex flex-col h-full w-[300px] border-l border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/80">
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-200 dark:border-zinc-800">
-        <div className="flex items-center gap-2">
-          {definition && (
-            <div
-              className="flex h-7 w-7 items-center justify-center rounded-md text-white"
-              style={{ backgroundColor: definition.color }}
+    <AnimatePresence>
+      <motion.div
+        key={selectedNodeId}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 20 }}
+        transition={{ duration: 0.2, ease: 'easeOut' }}
+        className="flex flex-col h-full w-[300px] border-l border-border bg-card"
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+          <div className="flex items-center gap-2.5">
+            {definition && (
+              <div
+                className="flex h-7 w-7 items-center justify-center rounded-md text-white shrink-0"
+                style={{ backgroundColor: definition.color }}
+              >
+                <definition.icon className="h-3.5 w-3.5" />
+              </div>
+            )}
+            <div>
+              <h3 className="text-sm font-semibold text-foreground">
+                {selectedNode.data.label as string}
+              </h3>
+              {definition && (
+                <p className="text-[11px] text-muted-foreground">{definition.description}</p>
+              )}
+            </div>
+          </div>
+          <div className="flex items-center gap-0.5">
+            <button
+              onClick={handleDelete}
+              className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+              title="Delete node"
             >
-              <definition.icon className="h-3.5 w-3.5" />
+              <Trash2 className="h-3.5 w-3.5" />
+            </button>
+            <button
+              onClick={() => setSelectedNodeId(null)}
+              className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {/* Label edit */}
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-muted-foreground">Label</label>
+            <input
+              type="text"
+              value={(selectedNode.data.label as string) || ''}
+              onChange={(e) => handleDataChange({ label: e.target.value })}
+              className="w-full h-8 px-3 text-sm rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-all"
+            />
+          </div>
+
+          {/* Description edit */}
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-muted-foreground">Description</label>
+            <input
+              type="text"
+              value={(selectedNode.data.description as string) || ''}
+              onChange={(e) => handleDataChange({ description: e.target.value })}
+              placeholder="Optional description..."
+              className="w-full h-8 px-3 text-sm rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-all"
+            />
+          </div>
+
+          <div className="h-px bg-border" />
+
+          {/* Type-specific panel */}
+          {nodeType === 'agent' && (
+            <AgentPanel data={selectedNode.data as any} onChange={handleDataChange} />
+          )}
+          {nodeType === 'condition' && (
+            <ConditionPanel data={selectedNode.data as any} onChange={handleDataChange} />
+          )}
+          {nodeType === 'whileLoop' && (
+            <WhilePanel data={selectedNode.data as any} onChange={handleDataChange} />
+          )}
+          {nodeType === 'transform' && (
+            <TransformPanel data={selectedNode.data as any} onChange={handleDataChange} />
+          )}
+          {nodeType === 'setState' && (
+            <SetStatePanel data={selectedNode.data as any} onChange={handleDataChange} />
+          )}
+          {nodeType === 'fileSearch' && (
+            <FileSearchPanel data={selectedNode.data as any} onChange={handleDataChange} />
+          )}
+          {nodeType === 'guardrails' && (
+            <GuardrailsPanel data={selectedNode.data as any} onChange={handleDataChange} />
+          )}
+          {nodeType === 'mcp' && (
+            <McpPanel data={selectedNode.data as any} onChange={handleDataChange} />
+          )}
+          {nodeType === 'humanApproval' && (
+            <HumanApprovalPanel data={selectedNode.data as any} onChange={handleDataChange} />
+          )}
+          {nodeType === 'note' && (
+            <NotePanel data={selectedNode.data as any} onChange={handleDataChange} />
+          )}
+          {(nodeType === 'start' || nodeType === 'end') && (
+            <div className="text-sm text-muted-foreground text-center py-8">
+              No additional configuration available.
             </div>
           )}
-          <div>
-            <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">
-              {selectedNode.data.label as string}
-            </h3>
-            {definition && (
-              <p className="text-xs text-zinc-400">{definition.description}</p>
-            )}
-          </div>
         </div>
-        <div className="flex items-center gap-1">
-          <button
-            onClick={handleDelete}
-            className="flex h-7 w-7 items-center justify-center rounded-md text-zinc-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
-            title="Delete node"
-          >
-            <Trash2 className="h-3.5 w-3.5" />
-          </button>
-          <button
-            onClick={() => setSelectedNodeId(null)}
-            className="flex h-7 w-7 items-center justify-center rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="flex-1 overflow-y-auto p-4">
-        {/* Label edit */}
-        <div className="mb-4">
-          <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1.5">Label</label>
-          <input
-            type="text"
-            value={(selectedNode.data.label as string) || ''}
-            onChange={(e) => handleDataChange({ label: e.target.value })}
-            className="w-full px-3 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
-          />
-        </div>
-
-        {/* Description edit */}
-        <div className="mb-4">
-          <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1.5">Description</label>
-          <input
-            type="text"
-            value={(selectedNode.data.description as string) || ''}
-            onChange={(e) => handleDataChange({ description: e.target.value })}
-            placeholder="Optional description..."
-            className="w-full px-3 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
-          />
-        </div>
-
-        <hr className="border-zinc-200 dark:border-zinc-700 mb-4" />
-
-        {/* Type-specific panel */}
-        {nodeType === 'agent' && (
-          <AgentPanel data={selectedNode.data as any} onChange={handleDataChange} />
-        )}
-        {nodeType === 'condition' && (
-          <ConditionPanel data={selectedNode.data as any} onChange={handleDataChange} />
-        )}
-        {nodeType === 'whileLoop' && (
-          <WhilePanel data={selectedNode.data as any} onChange={handleDataChange} />
-        )}
-        {nodeType === 'transform' && (
-          <TransformPanel data={selectedNode.data as any} onChange={handleDataChange} />
-        )}
-        {nodeType === 'setState' && (
-          <SetStatePanel data={selectedNode.data as any} onChange={handleDataChange} />
-        )}
-        {nodeType === 'fileSearch' && (
-          <FileSearchPanel data={selectedNode.data as any} onChange={handleDataChange} />
-        )}
-        {nodeType === 'guardrails' && (
-          <GuardrailsPanel data={selectedNode.data as any} onChange={handleDataChange} />
-        )}
-        {nodeType === 'mcp' && (
-          <McpPanel data={selectedNode.data as any} onChange={handleDataChange} />
-        )}
-        {nodeType === 'humanApproval' && (
-          <HumanApprovalPanel data={selectedNode.data as any} onChange={handleDataChange} />
-        )}
-        {nodeType === 'note' && (
-          <NotePanel data={selectedNode.data as any} onChange={handleDataChange} />
-        )}
-        {(nodeType === 'start' || nodeType === 'end') && (
-          <div className="text-sm text-zinc-400 text-center py-8">
-            No additional configuration available.
-          </div>
-        )}
-      </div>
-    </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }

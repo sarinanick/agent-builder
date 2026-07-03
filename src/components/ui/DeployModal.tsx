@@ -10,66 +10,38 @@ interface DeployModalProps {
 
 export default function DeployModal({ isOpen, onClose }: DeployModalProps) {
   const options = [
-    {
-      icon: Globe,
-      title: 'Deploy to Vercel',
-      description: 'One-click deployment to Vercel with serverless functions',
-      color: '#000',
-      badge: 'Recommended',
-    },
-    {
-      icon: Server,
-      title: 'Self-hosted',
-      description: 'Deploy on your own infrastructure using Docker or Node.js',
-      color: '#3b82f6',
-      badge: null,
-    },
-    {
-      icon: Download,
-      title: 'Download Code',
-      description: 'Export the workflow code and deploy anywhere',
-      color: '#22c55e',
-      badge: null,
-    },
+    { icon: Globe, title: 'Deploy to Vercel', description: 'One-click deployment to Vercel', badge: 'Recommended' },
+    { icon: Server, title: 'Self-hosted', description: 'Deploy on your own infrastructure', badge: null },
+    { icon: Download, title: 'Download Code', description: 'Export and deploy anywhere', badge: null },
   ];
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Deploy Workflow">
-      <div className="space-y-3">
+      <div className="space-y-2">
         {options.map((option) => (
-          <button
-            key={option.title}
-            className="w-full flex items-center gap-4 p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 hover:bg-zinc-100 dark:hover:bg-zinc-700/50 transition-all text-left group"
-          >
-            <div
-              className="flex h-12 w-12 items-center justify-center rounded-xl text-white shrink-0"
-              style={{ backgroundColor: option.color }}
-            >
-              <option.icon className="h-5 w-5" />
+          <button key={option.title}
+            className="w-full flex items-center gap-3.5 p-3.5 rounded-xl border border-border bg-background hover:bg-accent transition-colors text-left group">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted text-foreground shrink-0">
+              <option.icon className="h-4.5 w-4.5" />
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">
-                  {option.title}
-                </span>
+                <span className="text-sm font-medium text-foreground">{option.title}</span>
                 {option.badge && (
-                  <span className="px-2 py-0.5 text-xs font-medium bg-blue-500/10 text-blue-500 rounded-full">
+                  <span className="px-1.5 py-0.5 text-[10px] font-medium bg-muted text-muted-foreground rounded-md">
                     {option.badge}
                   </span>
                 )}
               </div>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
-                {option.description}
-              </p>
+              <p className="text-xs text-muted-foreground mt-0.5">{option.description}</p>
             </div>
-            <ExternalLink className="h-4 w-4 text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors shrink-0" />
+            <ExternalLink className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
           </button>
         ))}
       </div>
-
-      <div className="mt-4 p-3 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
-        <p className="text-xs text-amber-700 dark:text-amber-400">
-          <strong>Note:</strong> You need to publish a version before deploying. Click the version dropdown and select &quot;Publish&quot; to create a deployable version.
+      <div className="mt-3 p-2.5 rounded-lg bg-muted">
+        <p className="text-[11px] text-muted-foreground">
+          Publish a version before deploying. Click the version dropdown and select &quot;Publish&quot;.
         </p>
       </div>
     </Modal>
