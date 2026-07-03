@@ -9,7 +9,9 @@ import {
   Settings,
   ChevronDown,
   Check,
+  Store,
 } from 'lucide-react';
+import Link from 'next/link';
 import { useUIStore } from '@/store/uiStore';
 import { useFlowStore } from '@/store/flowStore';
 import ThemeToggle from './ThemeToggle';
@@ -151,6 +153,14 @@ export default function TopToolbar() {
           <Play className="h-3 w-3 fill-current" />
           Preview
         </button>
+
+        <Link
+          href="/marketplace"
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+        >
+          <Store className="h-3.5 w-3.5" />
+          Marketplace
+        </Link>
 
         <button
           onClick={() => setShowDeployModal(true)}
