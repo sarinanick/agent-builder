@@ -327,7 +327,7 @@ export default function MarketplacePage() {
                             {item.team.slice(0, 3).map((member, idx) => (
                               <div key={idx} className="relative group/member">
                                 <AvatarImage src={avatar(member.img)} alt={member.name} className="w-8 h-8 rounded-full border-2 object-cover cursor-pointer" />
-                                <div className="artist-tooltip absolute bottom-full mb-2 right-0 rounded-xl p-3 w-44 shadow-2xl text-right z-50" style={{ background: 'oklch(20% 0.01 280 / .95)', backdropFilter: 'blur(16px)', border: '1px solid oklch(30% 0 0 / .1)' }}>
+                                <div className="artist-tooltip absolute top-full mt-2 left-1/2 -translate-x-1/2 rounded-xl p-3 w-44 shadow-2xl text-right z-[100]" style={{ background: 'oklch(20% 0.01 280 / .95)', backdropFilter: 'blur(16px)', border: '1px solid oklch(30% 0 0 / .1)' }}>
                                   <div className="flex items-center gap-2">
                                     <AvatarImage src={avatar(member.img)} alt="" className="w-10 h-10 rounded-full" />
                                     <div><p className="text-xs font-bold">{member.name}</p><span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'oklch(65% 0.2 290 / .2)', color: 'oklch(75% 0.2 290)' }}>{member.role}</span></div>

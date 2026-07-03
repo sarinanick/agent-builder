@@ -280,15 +280,28 @@ html, body {
   pointer-events: auto;
 }
 
-/* Artist tooltip */
+/* Artist tooltip - shows BELOW avatar, visible outside container */
 .artist-tooltip {
   opacity: 0;
   pointer-events: none;
   transition: opacity 150ms cubic-bezier(.4,0,1,1);
+  visibility: hidden;
 }
 .group\/member:hover .artist-tooltip {
   opacity: 1;
   pointer-events: auto;
+  visibility: visible;
+}
+
+/* Ensure card allows tooltip overflow */
+.masonry-item {
+  overflow: visible !important;
+}
+.masonry-item > div {
+  overflow: visible !important;
+}
+.card-image-container {
+  overflow: hidden;
 }
 
 /* Badge gradients */
