@@ -15,6 +15,8 @@ import Link from 'next/link';
 import { useUIStore } from '@/store/uiStore';
 import { useFlowStore } from '@/store/flowStore';
 import ThemeToggle from './ThemeToggle';
+import { useI18n } from '@/lib/i18n';
+import LanguageToggle from '@/components/ui/LanguageToggle';
 import { useState, useRef, useEffect } from 'react';
 
 const VERSIONS = [
@@ -24,6 +26,7 @@ const VERSIONS = [
 ];
 
 export default function TopToolbar() {
+  const { lang } = useI18n();
   const projectName = useUIStore((s) => s.projectName);
   const setProjectName = useUIStore((s) => s.setProjectName);
   const setShowCodeModal = useUIStore((s) => s.setShowCodeModal);
@@ -136,7 +139,7 @@ export default function TopToolbar() {
           className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
         >
           <Code className="h-3.5 w-3.5" />
-          Code
+          {lang === 'fa' ? 'کد' : 'Code'}
         </button>
 
         <button
@@ -144,7 +147,7 @@ export default function TopToolbar() {
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium bg-foreground text-background hover:opacity-90 transition-opacity"
         >
           <Play className="h-3 w-3 fill-current" />
-          Preview
+          {lang === 'fa' ? 'پیش‌نمایش' : 'Preview'}
         </button>
 
         <Link
@@ -152,14 +155,14 @@ export default function TopToolbar() {
           className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
         >
           <Store className="h-3.5 w-3.5" />
-          Marketplace
+          {lang === 'fa' ? 'بازار' : 'Marketplace'}
         </Link>
 
         <button
           onClick={() => setShowDeployModal(true)}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium border border-border text-foreground hover:bg-accent transition-colors"
         >
-          Deploy
+          {lang === 'fa' ? 'استقرار' : 'Deploy'}
         </button>
       </div>
     </div>
