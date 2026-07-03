@@ -35,7 +35,9 @@ export default function PreviewModal({ isOpen, onClose }: PreviewModalProps) {
         ...prev,
         {
           role: 'assistant',
-          content: `[Preview] ${lang === 'fa' ? 'پاسخ شبیه‌سازی شده. در حالت واقعی، "' + userMessage + '" از طریق: بازنویسی کوئری → طبقه‌بندی → مسیریابی به ایجنت پردازش می‌شد.` : 'Simulated response. In production, "' + userMessage + '" would flow through: Query rewrite → Classify → Route to agent.'}`,
+          content: lang === 'fa'
+            ? `[پیش‌نمایش] پاسخ شبیه‌سازی شده. در حالت واقعی، "${userMessage}" از طریق: بازنویسی کوئری → طبقه‌بندی → مسیریابی به ایجنت پردازش می‌شد.`
+            : `[Preview] Simulated response. In production, "${userMessage}" would flow through: Query rewrite → Classify → Route to agent.`,
         },
       ]);
       setIsRunning(false);
