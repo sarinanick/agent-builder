@@ -5,6 +5,7 @@ import { useFlowStore } from '@/store/flowStore';
 import { NODE_DEFINITIONS } from '@/constants/nodeTypes';
 import type { CustomNodeType } from '@/types/nodes';
 import { X, Trash2 } from 'lucide-react';
+import { useI18n } from '@/lib/i18n';
 
 import AgentPanel from './panels/AgentPanel';
 import ConditionPanel from './panels/ConditionPanel';
@@ -18,6 +19,7 @@ import HumanApprovalPanel from './panels/HumanApprovalPanel';
 import NotePanel from './panels/NotePanel';
 
 export default function PropertiesPanel() {
+  const { lang } = useI18n();
   const selectedNodeId = useUIStore((s) => s.selectedNodeId);
   const setSelectedNodeId = useUIStore((s) => s.setSelectedNodeId);
   const nodes = useFlowStore((s) => s.nodes);
@@ -51,7 +53,7 @@ export default function PropertiesPanel() {
   return (
       <div
         key={selectedNodeId}
-        className="flex flex-col h-full w-[300px] border-l border-border bg-card animate-fadeIn"
+        className="panel-ios flex flex-col h-full w-[300px] animate-fadeIn"
       >
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-border">
@@ -93,25 +95,25 @@ export default function PropertiesPanel() {
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {/* Label edit */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-muted-foreground">Label</label>
+          <div>
+            <label className="panel-label">{lang === 'fa' ? 'عنوان' : 'Label'}</label>
             <input
               type="text"
               value={(selectedNode.data.label as string) || ''}
               onChange={(e) => handleDataChange({ label: e.target.value })}
-              className="w-full h-8 px-3 text-sm rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-all"
+              className="panel-input"
             />
           </div>
 
           {/* Description edit */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-muted-foreground">Description</label>
+          <div>
+            <label className="panel-label">{lang === 'fa' ? 'توضیحات' : 'Description'}</label>
             <input
               type="text"
               value={(selectedNode.data.description as string) || ''}
               onChange={(e) => handleDataChange({ description: e.target.value })}
-              placeholder="Optional description..."
-              className="w-full h-8 px-3 text-sm rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-all"
+              placeholder={lang === 'fa' ? 'توضیحات اختیاری...' : 'Optional description...'}
+              className="panel-input"
             />
           </div>
 

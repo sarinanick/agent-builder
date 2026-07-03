@@ -52,7 +52,7 @@ export default function TopToolbar() {
   }, []);
 
   return (
-    <div className="flex items-center justify-between h-11 px-4 border-b border-border bg-card">
+    <div className="toolbar-ios flex items-center justify-between h-12 px-4">
       {/* Left section */}
       <div className="flex items-center gap-3">
         <button className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
