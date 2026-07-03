@@ -6,6 +6,7 @@ import { NODE_DEFINITIONS } from '@/constants/nodeTypes';
 import type { CustomNodeType } from '@/types/nodes';
 import { X, Trash2 } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
+import { FieldInput } from '@/components/ui/FormField';
 
 import AgentPanel from './panels/AgentPanel';
 import ConditionPanel from './panels/ConditionPanel';
@@ -97,23 +98,19 @@ export default function PropertiesPanel() {
           {/* Label edit */}
           <div>
             <label className="panel-label">{lang === 'fa' ? 'عنوان' : 'Label'}</label>
-            <input
-              type="text"
+            <FieldInput
               value={(selectedNode.data.label as string) || ''}
               onChange={(e) => handleDataChange({ label: e.target.value })}
-              className="panel-input"
             />
           </div>
 
           {/* Description edit */}
           <div>
             <label className="panel-label">{lang === 'fa' ? 'توضیحات' : 'Description'}</label>
-            <input
-              type="text"
+            <FieldInput
               value={(selectedNode.data.description as string) || ''}
               onChange={(e) => handleDataChange({ description: e.target.value })}
               placeholder={lang === 'fa' ? 'توضیحات اختیاری...' : 'Optional description...'}
-              className="panel-input"
             />
           </div>
 
