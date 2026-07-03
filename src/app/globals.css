@@ -223,3 +223,61 @@ html, body {
     @apply font-sans;
   }
 }
+
+/* ─── Marketplace Animations ──────────────────────────────── */
+.ai-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 200ms cubic-bezier(.4,0,.2,1), box-shadow 200ms cubic-bezier(.4,0,.2,1);
+}
+.ai-card:hover {
+  box-shadow: 0 20px 40px -12px oklch(0% 0 0 / .5);
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(16px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes spring-anim {
+  0% { transform: scale(.9); opacity: 0; }
+  60% { transform: scale(1.03); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.like-burst {
+  position: absolute; inset: 0; pointer-events: none; z-index: 40;
+  display: flex; align-items: center; justify-content: center;
+}
+.spring-pop {
+  animation: spring-anim 250ms cubic-bezier(.175,.885,.32,1.275);
+}
+
+.particle {
+  position: absolute; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--color-orange-500, #f97316);
+  animation: burst 600ms ease-out forwards;
+}
+@keyframes burst {
+  to { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+}
+
+/* Skeleton shimmer */
+.skeleton {
+  position: relative; overflow: hidden; background: oklch(20% 0 0);
+}
+.skeleton::after {
+  content: ''; position: absolute; inset: 0; transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, oklch(30% 0 0 / .6), transparent);
+  animation: shimmer 1.4s infinite;
+}
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+
+/* Toast */
+.toast-enter {
+  animation: toast-in 250ms cubic-bezier(.175,.885,.32,1.275);
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-12px) scale(.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
