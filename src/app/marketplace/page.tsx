@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useMemo, useRef, lazy, Suspense } from 'react';
 import { Search, Heart, Star, LayoutGrid, Grid3X3, Filter, ArrowUp } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
+import AvatarGroup from '@/components/ui/AvatarGroup';
 import { generateItems, ALL_TOOLS, CATEGORIES, type Artwork, type Toast } from './data';
 
 const FilmstripModal = lazy(() => import('./FilmstripModal'));
@@ -323,20 +324,7 @@ export default function MarketplacePage() {
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2.5">
-                          <div className="flex -space-x-2.5">
-                            {item.team.slice(0, 3).map((member, idx) => (
-                              <div key={idx} className="relative group/member">
-                                <AvatarImage src={avatar(member.img)} alt={member.name} className="w-8 h-8 rounded-full border-2 object-cover cursor-pointer" />
-                                <div className="artist-tooltip absolute top-full mt-2 left-1/2 -translate-x-1/2 rounded-xl p-3 w-44 shadow-2xl text-right z-[100]" style={{ background: 'oklch(20% 0.01 280 / .95)', backdropFilter: 'blur(16px)', border: '1px solid oklch(30% 0 0 / .1)' }}>
-                                  <div className="flex items-center gap-2">
-                                    <AvatarImage src={avatar(member.img)} alt="" className="w-10 h-10 rounded-full" />
-                                    <div><p className="text-xs font-bold">{member.name}</p><span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'oklch(65% 0.2 290 / .2)', color: 'oklch(75% 0.2 290)' }}>{member.role}</span></div>
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
-                            {item.team.length > 3 && <div className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold" style={{ background: 'oklch(15% 0.01 280)', border: '2px solid oklch(20% 0.01 280)', color: 'oklch(50% 0 0)' }}>+{item.team.length - 3}</div>}
-                          </div>
+                          <AvatarGroup members={item.team} max={3} />
                           <div>
                             <p className="text-sm font-bold leading-tight">{item.teamName}</p>
                             <p className="text-[10px]" style={{ color: 'oklch(50% 0 0)' }}>{item.team.length} members</p>
