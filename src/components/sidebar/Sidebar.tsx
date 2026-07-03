@@ -4,8 +4,6 @@ import { Search } from 'lucide-react';
 import { useUIStore } from '@/store/uiStore';
 import { NODE_CATEGORIES, NODE_DEFINITIONS } from '@/constants/nodeTypes';
 import type { NodeTypeDefinition } from '@/constants/nodeTypes';
-import { motion } from 'framer-motion';
-
 export default function Sidebar() {
   const searchQuery = useUIStore((s) => s.searchQuery);
   const setSearchQuery = useUIStore((s) => s.setSearchQuery);
@@ -43,12 +41,7 @@ export default function Sidebar() {
       {/* Node categories */}
       <div className="flex-1 overflow-y-auto px-2 pb-3 space-y-3">
         {filteredCategories.map((cat, catIndex) => (
-          <motion.div
-            key={cat.id}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: catIndex * 0.05, duration: 0.3 }}
-          >
+          <div key={cat.id} className="animate-fadeInUp" style={{ animationDelay: `${catIndex * 50}ms` }}>
             <div className="px-1.5 mb-1.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
               {cat.label}
             </div>
@@ -58,7 +51,7 @@ export default function Sidebar() {
                 return <SidebarNodeItem key={def.type} nodeDef={def} />;
               })}
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>
