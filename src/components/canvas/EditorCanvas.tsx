@@ -7,6 +7,7 @@ import {
   type NodeTypes,
   BackgroundVariant,
   type Node,
+  useReactFlow,
 } from '@xyflow/react';
 import { useCallback } from 'react';
 import { useFlowStore } from '@/store/flowStore';
@@ -119,6 +120,7 @@ export default function EditorCanvas() {
   const onConnect = useFlowStore((s) => s.onConnect);
   const addNode = useFlowStore((s) => s.addNode);
   const setSelectedNodeId = useUIStore((s) => s.setSelectedNodeId);
+  const { screenToFlowPosition } = useReactFlow();
 
   const onDragOver = useCallback((event: React.DragEvent) => {
     event.preventDefault();
@@ -131,19 +133,15 @@ export default function EditorCanvas() {
       const type = event.dataTransfer.getData('application/reactflow') as CustomNodeType;
       if (!type || !NODE_DEFINITIONS[type]) return;
 
-      const flowContainer = document.querySelector('.react-flow');
-      if (!flowContainer) return;
-
-      const rect = flowContainer.getBoundingClientRect();
-      const position = {
-        x: (event.clientX - rect.left) / 1.2,
-        y: (event.clientY - rect.top) / 1.2,
-      };
+      const position = screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
 
       const data = defaultNodeData[type] || { label: type };
       addNode(type, position, data);
     },
-    [addNode]
+    [addNode, screenToFlowPosition]
   );
 
   const onPaneClick = useCallback(() => {
