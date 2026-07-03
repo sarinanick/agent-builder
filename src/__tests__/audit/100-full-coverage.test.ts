@@ -5,12 +5,12 @@ describe('Audit 100 - Full coverage summary', () => {
     const categories = {
       'architecture': { count: 10, status: 'partial' },
       'state-management': { count: 19, status: 'partial' },
-      'css-architecture': { count: 9, status: 'partial' },
+      'css-architecture': { count: 11, status: 'partial' },
       'ui-ux': { count: 40, status: 'partial' },
       'accessibility': { count: 50, status: 'partial' },
       'rtl-i18n': { count: 50, status: 'partial' },
       'testing': { count: 100, status: 'in-progress' },
-      'performance': { count: 100, status: 'partial' },
+      'performance': { count: 120, status: 'partial' },
     }
 
     const total = Object.values(categories).reduce((sum, cat) => sum + cat.count, 0)
