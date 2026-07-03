@@ -20,7 +20,8 @@ describe('Audit 065 - Performance lazy loading', () => {
   it('should have code splitting via dynamic import', () => {
     const pagePath = join(process.cwd(), 'src/app/page.tsx')
     const content = readFileSync(pagePath, 'utf-8')
-    // Page should use lazy loading for modals
-    expect(content).toContain('dynamic') // Or lazy
+    // Page should use lazy() for modals with Suspense wrapper
+    expect(content).toContain('lazy(')
+    expect(content).toContain('Suspense')
   })
 })

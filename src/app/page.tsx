@@ -1,16 +1,18 @@
 'use client';
 
 import { ReactFlowProvider } from '@xyflow/react';
-import { useEffect } from 'react';
+import { useEffect, Suspense, lazy } from 'react';
 import Sidebar from '@/components/sidebar/Sidebar';
 import TopToolbar from '@/components/toolbar/TopToolbar';
 import EditorCanvas from '@/components/canvas/EditorCanvas';
 import PropertiesPanel from '@/components/panel/PropertiesPanel';
-import CodeModal from '@/components/ui/CodeModal';
-import PreviewModal from '@/components/ui/PreviewModal';
-import DeployModal from '@/components/ui/DeployModal';
 import { useFlowStore } from '@/store/flowStore';
 import { useUIStore } from '@/store/uiStore';
+
+// Audit item #3: Lazy load modals for code splitting
+const CodeModal = lazy(() => import('@/components/ui/CodeModal'));
+const PreviewModal = lazy(() => import('@/components/ui/PreviewModal'));
+const DeployModal = lazy(() => import('@/components/ui/DeployModal'));
 
 function EditorContent() {
   const loadTemplate = useFlowStore((s) => s.loadTemplate);
@@ -65,9 +67,11 @@ function EditorContent() {
         {selectedNodeId && <PropertiesPanel />}
       </div>
 
-      <CodeModal isOpen={showCodeModal} onClose={() => setShowCodeModal(false)} />
-      <PreviewModal isOpen={showPreviewModal} onClose={() => setShowPreviewModal(false)} />
-      <DeployModal isOpen={showDeployModal} onClose={() => setShowDeployModal(false)} />
+      <Suspense fallback={null}>
+        <CodeModal isOpen={showCodeModal} onClose={() => setShowCodeModal(false)} />
+        <PreviewModal isOpen={showPreviewModal} onClose={() => setShowPreviewModal(false)} />
+        <DeployModal isOpen={showDeployModal} onClose={() => setShowDeployModal(false)} />
+      </Suspense>
     </div>
   );
 }
