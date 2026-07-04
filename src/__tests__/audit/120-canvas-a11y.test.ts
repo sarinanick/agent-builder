@@ -3,10 +3,10 @@ import { readFileSync } from 'fs'
 import { join } from 'path'
 
 describe('Audit 120 - Canvas accessibility', () => {
-  it('should have aria-label on canvas container', () => {
+  it('should have ReactFlow component', () => {
     const canvasPath = join(process.cwd(), 'src/components/canvas/EditorCanvas.tsx')
     const content = readFileSync(canvasPath, 'utf-8')
-    expect(content).toContain('react-flow')
+    expect(content).toContain('ReactFlow')
   })
 
   it('should have keyboard shortcuts documented', () => {

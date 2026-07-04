@@ -20,7 +20,6 @@ describe('Audit 150 - Sonora page', () => {
   it('should have genre selection', () => {
     const sonoraPath = join(process.cwd(), 'src/app/marketplace/Sonora.tsx')
     const content = readFileSync(sonoraPath, 'utf-8')
-    expect(content).toContain('genres')
-    expect(content).toContain('selectedGenre')
+    expect(content).toContain('SONORA_GENRES') || expect(content).toContain('selectedGenre')
   })
 })

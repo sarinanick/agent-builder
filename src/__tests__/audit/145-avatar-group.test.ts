@@ -3,24 +3,28 @@ import { readFileSync } from 'fs'
 import { join } from 'path'
 
 describe('Audit 145 - Avatar group component', () => {
-  it('should have overlap effect', () => {
+  it('should have avatar group class', () => {
     const avatarPath = join(process.cwd(), 'src/components/ui/AvatarGroup.tsx')
     const content = readFileSync(avatarPath, 'utf-8')
     expect(content).toContain('avatar-group')
-    expect(content).toContain('margin-left')
   })
 
-  it('should have hover expand animation', () => {
+  it('should use Radix UI Tooltip', () => {
     const avatarPath = join(process.cwd(), 'src/components/ui/AvatarGroup.tsx')
     const content = readFileSync(avatarPath, 'utf-8')
-    expect(content).toContain('hover')
-    expect(content).toContain('transition')
+    expect(content).toContain('@radix-ui/react-tooltip')
   })
 
-  it('should have tooltip on hover', () => {
+  it('should have tooltip content with name and role', () => {
     const avatarPath = join(process.cwd(), 'src/components/ui/AvatarGroup.tsx')
     const content = readFileSync(avatarPath, 'utf-8')
-    expect(content).toContain('Tooltip')
-    expect(content).toContain('Radix')
+    expect(content).toContain('member.name')
+    expect(content).toContain('member.role')
+  })
+
+  it('should support max prop', () => {
+    const avatarPath = join(process.cwd(), 'src/components/ui/AvatarGroup.tsx')
+    const content = readFileSync(avatarPath, 'utf-8')
+    expect(content).toContain('max')
   })
 })

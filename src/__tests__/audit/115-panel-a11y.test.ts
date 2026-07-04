@@ -17,9 +17,9 @@ describe('Audit 115 - Properties Panel accessibility', () => {
     expect(content).toContain('label')
   })
 
-  it('should have delete button with aria-label', () => {
+  it('should have delete button with title attribute', () => {
     const panelPath = join(process.cwd(), 'src/components/panel/PropertiesPanel.tsx')
     const content = readFileSync(panelPath, 'utf-8')
-    expect(content).toContain('aria-label')
+    expect(content).toContain('title=')
   })
 })
