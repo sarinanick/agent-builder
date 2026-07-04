@@ -27,12 +27,17 @@ export default function NodeWrapper({
     <div
       className={`node-ios ${selected ? 'selected' : ''}`}
       onClick={() => setSelectedNodeId(id)}
+      role="button"
+      tabIndex={0}
+      aria-label={`${(data.label as string) || label} node. Click to select.`}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedNodeId(id); } }}
     >
       {hasInput && (
         <Handle
           type="target"
           position={Position.Left}
-          className="!w-2 !h-2"
+          className="!w-2.5 !h-2.5"
+          aria-label="Input connection"
         />
       )}
 
@@ -54,7 +59,8 @@ export default function NodeWrapper({
         <Handle
           type="source"
           position={Position.Right}
-          className="!w-2 !h-2"
+          className="!w-2.5 !h-2.5"
+          aria-label="Output connection"
         />
       )}
     </div>

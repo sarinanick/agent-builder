@@ -105,20 +105,22 @@ export default function TopToolbar() {
       </div>
 
       {/* Center section */}
-      <div className="flex items-center gap-0.5">
+      <div className="flex items-center gap-1">
         <button
           onClick={undo}
           disabled={!canUndo}
-          className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors disabled:opacity-25 disabled:cursor-not-allowed"
-          title="Undo"
+          className="btn-3d btn-3d-secondary btn-3d-icon !w-8 !h-8 !p-0 disabled:opacity-25 disabled:cursor-not-allowed"
+          title={lang === 'fa' ? 'بازگشت' : 'Undo'}
+          aria-label={lang === 'fa' ? 'بازگشت' : 'Undo'}
         >
           <Undo2 className="h-3.5 w-3.5" />
         </button>
         <button
           onClick={redo}
           disabled={!canRedo}
-          className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors disabled:opacity-25 disabled:cursor-not-allowed"
-          title="Redo"
+          className="btn-3d btn-3d-secondary btn-3d-icon !w-8 !h-8 !p-0 disabled:opacity-25 disabled:cursor-not-allowed"
+          title={lang === 'fa' ? 'بازانجام' : 'Redo'}
+          aria-label={lang === 'fa' ? 'بازانجام' : 'Redo'}
         >
           <Redo2 className="h-3.5 w-3.5" />
         </button>
@@ -126,42 +128,39 @@ export default function TopToolbar() {
 
       {/* Right section */}
       <div className="flex items-center gap-1">
-        <button className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
+        <button className="btn-3d btn-3d-secondary btn-3d-icon !w-8 !h-8 !p-0"
+          aria-label={lang === 'fa' ? 'تنظیمات' : 'Settings'}>
           <Settings className="h-3.5 w-3.5" />
         </button>
 
         <ThemeToggle />
 
-        <div className="w-px h-4 bg-border mx-1" />
+        <div className="w-px h-5 mx-1" style={{ background: 'var(--border-shell)' }} />
 
-        <button
-          onClick={() => setShowCodeModal(true)}
-          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-        >
+        <button onClick={() => setShowCodeModal(true)}
+          className="btn-3d btn-3d-secondary !text-xs !px-3 !py-1.5"
+          aria-label={lang === 'fa' ? 'خروجی کد' : 'Export code'}>
           <Code className="h-3.5 w-3.5" />
           {lang === 'fa' ? 'کد' : 'Code'}
         </button>
 
-        <button
-          onClick={() => setShowPreviewModal(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium bg-foreground text-background hover:opacity-90 transition-opacity"
-        >
+        <button onClick={() => setShowPreviewModal(true)}
+          className="btn-3d btn-3d-primary !text-xs !px-3 !py-1.5"
+          aria-label={lang === 'fa' ? 'پیش‌نمایش' : 'Preview'}>
           <Play className="h-3 w-3 fill-current" />
           {lang === 'fa' ? 'پیش‌نمایش' : 'Preview'}
         </button>
 
-        <Link
-          href="/marketplace"
-          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-        >
+        <Link href="/marketplace"
+          className="btn-3d btn-3d-secondary !text-xs !px-3 !py-1.5 inline-flex"
+          aria-label={lang === 'fa' ? 'بازار' : 'Marketplace'}>
           <Store className="h-3.5 w-3.5" />
           {lang === 'fa' ? 'بازار' : 'Marketplace'}
         </Link>
 
-        <button
-          onClick={() => setShowDeployModal(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium border border-border text-foreground hover:bg-accent transition-colors"
-        >
+        <button onClick={() => setShowDeployModal(true)}
+          className="btn-3d btn-3d-secondary !text-xs !px-3 !py-1.5"
+          aria-label={lang === 'fa' ? 'استقرار' : 'Deploy'}>
           {lang === 'fa' ? 'استقرار' : 'Deploy'}
         </button>
       </div>

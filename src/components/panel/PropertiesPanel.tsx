@@ -76,17 +76,20 @@ export default function PropertiesPanel() {
               )}
             </div>
           </div>
-          <div className="flex items-center gap-0.5">
+          <div className="flex items-center gap-1">
             <button
               onClick={handleDelete}
-              className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
-              title="Delete node"
+              className="btn-3d btn-3d-danger btn-3d-icon !w-8 !h-8 !p-0 !text-xs"
+              title={lang === 'fa' ? 'حذف نود' : 'Delete node'}
+              aria-label={lang === 'fa' ? 'حذف نود' : 'Delete node'}
             >
               <Trash2 className="h-3.5 w-3.5" />
             </button>
             <button
               onClick={() => setSelectedNodeId(null)}
-              className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+              className="btn-3d btn-3d-secondary btn-3d-icon !w-8 !h-8 !p-0"
+              title={lang === 'fa' ? 'بستن' : 'Close'}
+              aria-label={lang === 'fa' ? 'بستن پنل' : 'Close panel'}
             >
               <X className="h-4 w-4" />
             </button>

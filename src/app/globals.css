@@ -626,3 +626,143 @@ body {
   .react-flow__edge-path { stroke-width: 3 !important; }
   .react-flow__handle { border-width: 3px !important; }
 }
+
+/* ═══ 3D Button System (iPhone-like depth) ═══ */
+.btn-3d {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius-control);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  transform-style: preserve-3d;
+  /* Light source from top-left */
+  box-shadow:
+    0 1px 0 0 rgba(255,255,255,0.1) inset,
+    0 -1px 0 0 rgba(0,0,0,0.2) inset,
+    0 4px 8px -2px rgba(0,0,0,0.3),
+    0 2px 4px -1px rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.08);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.btn-3d:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 1px 0 0 rgba(255,255,255,0.12) inset,
+    0 -1px 0 0 rgba(0,0,0,0.25) inset,
+    0 8px 16px -4px rgba(0,0,0,0.4),
+    0 4px 8px -2px rgba(0,0,0,0.3);
+  filter: brightness(1.05);
+}
+
+.btn-3d:active {
+  transform: translateY(1px);
+  box-shadow:
+    0 2px 4px rgba(0,0,0,0.3) inset,
+    0 1px 2px rgba(0,0,0,0.2);
+}
+
+.btn-3d-primary {
+  background: linear-gradient(180deg, #1ad4b5 0%, #14B8A6 40%, #0D9488 100%);
+  color: white;
+  border-color: rgba(255,255,255,0.15);
+}
+
+.btn-3d-primary:hover {
+  background: linear-gradient(180deg, #2de0c3 0%, #1ad4b5 40%, #14B8A6 100%);
+}
+
+.btn-3d-secondary {
+  background: linear-gradient(180deg, var(--shell-hover) 0%, var(--shell) 100%);
+  color: var(--text-on-shell);
+  border-color: var(--border-shell);
+}
+
+.btn-3d-secondary:hover {
+  background: linear-gradient(180deg, var(--shell-border) 0%, var(--shell-hover) 100%);
+}
+
+.btn-3d-danger {
+  background: linear-gradient(180deg, #f87171 0%, #EF4444 40%, #dc2626 100%);
+  color: white;
+  border-color: rgba(255,255,255,0.15);
+}
+
+.btn-3d-danger:hover {
+  background: linear-gradient(180deg, #fca5a5 0%, #f87171 40%, #EF4444 100%);
+}
+
+.btn-3d-ghost {
+  background: transparent;
+  color: var(--text-on-shell-muted);
+  border: 1px solid transparent;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.btn-3d-ghost:hover {
+  background: var(--shell-hover);
+  color: var(--text-on-shell);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.btn-3d-icon {
+  padding: 8px;
+  border-radius: var(--radius-control);
+}
+
+/* ═══ Panel Styles (iPhone-like) ═══ */
+.panel-glass {
+  background: rgba(26, 29, 34, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-panel);
+}
+
+.light .panel-glass {
+  background: rgba(248, 245, 239, 0.8);
+  border-color: rgba(0,0,0,0.06);
+}
+
+/* ═══ View Transitions ═══ */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: fade-out 0.15s ease-in;
+}
+
+::view-transition-new(root) {
+  animation: fade-in 0.15s ease-out;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ═══ Visually Hidden (a11y) ═══ */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
