@@ -6,6 +6,7 @@ import Sidebar from '@/components/sidebar/Sidebar';
 import TopToolbar from '@/components/toolbar/TopToolbar';
 import EditorCanvas from '@/components/canvas/EditorCanvas';
 import PropertiesPanel from '@/components/panel/PropertiesPanel';
+import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { useFlowStore } from '@/store/flowStore';
 import { useUIStore } from '@/store/uiStore';
 
@@ -79,7 +80,9 @@ function EditorContent() {
 export default function Home() {
   return (
     <ReactFlowProvider>
-      <EditorContent />
+      <ErrorBoundary>
+        <EditorContent />
+      </ErrorBoundary>
     </ReactFlowProvider>
   );
 }
