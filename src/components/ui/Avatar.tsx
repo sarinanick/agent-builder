@@ -1,75 +1,31 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import * as React from "react";
+import * as AvatarPrimitive from "@radix-ui/react-avatar";
+import { cn } from "@/lib/utils";
 
-interface AvatarProps {
-  src?: string;
-  alt: string;
-  size?: 'sm' | 'md' | 'lg';
-  fallback?: string;
-  className?: string;
-}
+const Avatar = React.forwardRef<
+  React.ComponentRef<typeof AvatarPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Root ref={ref} className={cn("relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full", className)} {...props} />
+));
+Avatar.displayName = AvatarPrimitive.Root.displayName;
 
-const sizeClasses = {
-  sm: 'h-6 w-6 text-[10px]',
-  md: 'h-8 w-8 text-xs',
-  lg: 'h-10 w-10 text-sm',
-};
+const AvatarImage = React.forwardRef<
+  React.ComponentRef<typeof AvatarPrimitive.Image>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Image ref={ref} className={cn("aspect-square h-full w-full", className)} {...props} />
+));
+AvatarImage.displayName = AvatarPrimitive.Image.displayName;
 
-export function Avatar({ src, alt, size = 'md', fallback, className = '' }: AvatarProps) {
-  const [error, setError] = useState(false);
+const AvatarFallback = React.forwardRef<
+  React.ComponentRef<typeof AvatarPrimitive.Fallback>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Fallback ref={ref} className={cn("flex h-full w-full items-center justify-center rounded-full bg-surface-hover text-text-on-shell", className)} {...props} />
+));
+AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 
-  if (error || !src) {
-    return (
-      <div
-        className={`flex items-center justify-center rounded-full font-medium ${sizeClasses[size]} ${className}`}
-        style={{ background: 'var(--surface-elevated)', color: 'var(--text-secondary)' }}
-      >
-        {fallback || alt.charAt(0).toUpperCase()}
-      </div>
-    );
-  }
-
-  return (
-    <img
-      src={src}
-      alt={alt}
-      className={`rounded-full object-cover ${sizeClasses[size]} ${className}`}
-      onError={() => setError(true)}
-      loading="lazy"
-    />
-  );
-}
-
-interface AvatarGroupProps {
-  avatars: { src?: string; alt: string }[];
-  max?: number;
-  size?: 'sm' | 'md' | 'lg';
-}
-
-export function AvatarGroup({ avatars, max = 3, size = 'md' }: AvatarGroupProps) {
-  const visible = avatars.slice(0, max);
-  const remaining = avatars.length - max;
-
-  return (
-    <div className="flex -space-x-2">
-      {visible.map((avatar, i) => (
-        <Avatar
-          key={i}
-          src={avatar.src}
-          alt={avatar.alt}
-          size={size}
-          className="border-2 border-white"
-        />
-      ))}
-      {remaining > 0 && (
-        <div
-          className={`flex items-center justify-center rounded-full font-medium ${sizeClasses[size]}`}
-          style={{ background: 'var(--surface-elevated)', color: 'var(--text-secondary)', border: '2px solid white' }}
-        >
-          +{remaining}
-        </div>
-      )}
-    </div>
-  );
-}
+export { Avatar, AvatarImage, AvatarFallback };
